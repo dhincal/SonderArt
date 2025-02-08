@@ -37,7 +37,7 @@ export default function Header() {
         <Link onPress={() => signOut()} href="/(auth)/sign-in">
           <Image
             style={styles.headerProfile}
-            source={require("@/assets/images/ppdummy.jpg")}
+            source={{ uri: user.user?.imageUrl }}
           />
         </Link>
       </SignedIn>
