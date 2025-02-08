@@ -15,8 +15,6 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 export default function Header() {
   const user = useUser();
 
-  const navigation = useNavigation<NavigationProp<any>>();
-
   const { signOut } = useClerk();
 
   return (
