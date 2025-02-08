@@ -22,6 +22,7 @@ type Props = {
   eventOrganizer: string;
   eventOrganizerImage: string;
   openModal: () => void;
+  isAuthor: boolean;
 };
 
 export default function MainPageEvent(props: Props) {
@@ -104,12 +105,21 @@ export default function MainPageEvent(props: Props) {
             style={styles.bookmarkButton}
             onPress={() => props.openModal()}
           >
-            <IconSymbol
-              name="bookmark.circle"
-              size={32}
-              color="#fff"
-              style={{ alignSelf: "center" }}
-            />
+            {props.isAuthor ? (
+              <IconSymbol
+                name="eye.circle"
+                size={32}
+                color="#fff"
+                style={{ alignSelf: "center" }}
+              />
+            ) : (
+              <IconSymbol
+                name="bookmark.circle"
+                size={32}
+                color="#fff"
+                style={{ alignSelf: "center" }}
+              />
+            )}
           </TouchableOpacity>
         </View>
       </View>

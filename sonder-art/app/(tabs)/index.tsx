@@ -1,5 +1,5 @@
 import Header from "@/components/header";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Image,
   StyleSheet,
@@ -21,11 +21,14 @@ import MainPageEvent from "@/components/MainPageEvent";
 import { useUser } from "@clerk/clerk-expo";
 import { useQuery } from "@tanstack/react-query";
 import RegisterModal from "@/components/registerModal";
+import ReviewModal from "@/components/reviewModal";
 
 export default function HomeScreen() {
   const [search, setSearch] = React.useState("");
 
-  const [modal, setModal] = React.useState(false);
+  const [applyModal, setApplyModal] = React.useState(false);
+  const [reviewModal, setReviewModal] = React.useState(false);
+  const [eventId, setEventId] = React.useState("");
 
   const { isLoading, isSuccess, data, error } = useQuery({
     queryKey: ["events"],
@@ -79,30 +82,33 @@ export default function HomeScreen() {
                     eventAttendees={100}
                     eventOrganizer={"Event Organizer"}
                     eventOrganizerImage={""}
-                    openModal={() => setModal(true)}
+                    openModal={
+                      event.publisher === user.user?.id
+                        ? () => setReviewModal(true)
+                        : () => {
+                            setApplyModal(true);
+                            setEventId(event.id);
+                          }
+                    }
+                    isAuthor={event.publisher === user.user?.id}
                   />
                 );
               })
             ) : (
               <Text>"Loading..."</Text>
             )}
-            <MainPageEvent
-              eventName="Fundraiser for Dino Skeletons in chicago"
-              eventDate="27th December 2025"
-              eventLocation="Field Museum, Chicago IL"
-              eventImage="https://peabody.yale.edu/sites/default/files/styles/cropped_image/public/page-content/2024-08/5K7A9328-HDR_crop_card_2x.jpg?itok=7WCPnWID"
-              eventDescription="Event Description"
-              eventAttendees={100}
-              eventOrganizer="Event Organizer"
-              eventOrganizerImage={user.user?.imageUrl ?? ""}
-              openModal={() => setModal(true)}
-            />
           </View>
         </ScrollView>
+        <ReviewModal
+          isVisible={reviewModal}
+          postID={eventId}
+          onClose={() => setReviewModal(false)}
+        />
+
         <RegisterModal
-          isVisible={modal}
+          isVisible={applyModal}
           onClose={() => {
-            setModal(false);
+            setApplyModal(false);
           }}
         />
       </SafeAreaView>
