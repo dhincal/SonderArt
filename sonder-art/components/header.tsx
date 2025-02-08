@@ -11,6 +11,7 @@ import { SignedIn, SignedOut, useUser, useClerk } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
 
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import Popover from "react-native-popover-view";
 
 export default function Header() {
   const user = useUser();
@@ -32,12 +33,33 @@ export default function Header() {
         </Link>
       </SignedOut>
       <SignedIn>
-        <Link onPress={() => signOut()} href="/(auth)/sign-in">
-          <Image
-            style={styles.headerProfile}
-            source={{ uri: user.user?.imageUrl }}
-          />
-        </Link>
+        <Popover
+          from={
+            <TouchableOpacity>
+              <Image
+                style={styles.headerProfile}
+                source={{ uri: user.user?.imageUrl }}
+              />
+            </TouchableOpacity>
+          }
+        >
+          <View style={{ flexDirection: "column", padding: 16, gap: 16 }}>
+            <TouchableOpacity
+              onPress={() => {
+                console.log("Become Artist!");
+              }}
+            >
+              <Text>Become Artist!</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                console.log("Become Publisher00!");
+              }}
+            >
+              <Text>Become Publisher!</Text>
+            </TouchableOpacity>
+          </View>
+        </Popover>
       </SignedIn>
       <Text style={styles.appTitle}>SONDERART</Text>
       <TouchableOpacity
