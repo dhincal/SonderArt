@@ -17,9 +17,24 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { SearchBar } from "react-native-screens";
 import { useFonts } from "expo-font";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import MainPageEvent from "@/components/MainPageEvent";
+import { useUser } from "@clerk/clerk-expo";
+import { useQuery } from "@tanstack/react-query";
 
 export default function HomeScreen() {
   const [search, setSearch] = React.useState("");
+
+  const { isLoading, data, error } = useQuery({
+    queryKey: ["events"],
+    queryFn: async () => {
+      const res = await fetch("https://api.pulth.com/api/events");
+      return res.json();
+    },
+  });
+
+  console.log(data);
+
+  const user = useUser();
   useFonts({
     Jomhurai: require("../../assets/fonts/Jomhuria-Regular.ttf"),
   });
@@ -40,6 +55,36 @@ export default function HomeScreen() {
               <IconSymbol name="mappin.and.ellipse" size={32} color="#ffffff" />
               <Text style={styles.font}>Chicago</Text>
             </View>
+            <MainPageEvent
+              eventName="Fundraiser for Dino Skeletons in chicago"
+              eventDate="27th December 2025"
+              eventLocation="Field Museum, Chicago IL"
+              eventImage="https://peabody.yale.edu/sites/default/files/styles/cropped_image/public/page-content/2024-08/5K7A9328-HDR_crop_card_2x.jpg?itok=7WCPnWID"
+              eventDescription="Event Description"
+              eventAttendees={100}
+              eventOrganizer="Event Organizer"
+              eventOrganizerImage={user.user?.imageUrl ?? ""}
+            />
+            <MainPageEvent
+              eventName="Fundraiser for Dino Skeletons in chicago"
+              eventDate="27th December 2025"
+              eventLocation="Field Museum, Chicago IL"
+              eventImage="https://peabody.yale.edu/sites/default/files/styles/cropped_image/public/page-content/2024-08/5K7A9328-HDR_crop_card_2x.jpg?itok=7WCPnWID"
+              eventDescription="Event Description"
+              eventAttendees={100}
+              eventOrganizer="Event Organizer"
+              eventOrganizerImage={user.user?.imageUrl ?? ""}
+            />
+            <MainPageEvent
+              eventName="Fundraiser for Dino Skeletons in chicago"
+              eventDate="27th December 2025"
+              eventLocation="Field Museum, Chicago IL"
+              eventImage="https://peabody.yale.edu/sites/default/files/styles/cropped_image/public/page-content/2024-08/5K7A9328-HDR_crop_card_2x.jpg?itok=7WCPnWID"
+              eventDescription="Event Description"
+              eventAttendees={100}
+              eventOrganizer="Event Organizer"
+              eventOrganizerImage={user.user?.imageUrl ?? ""}
+            />
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -58,6 +103,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     rowGap: 14,
+    paddingBottom: 100,
   },
   searchBar: {
     width: "90%",
