@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, TextInput, Button, View } from "react-native";
+import { Text, TextInput, Button, View, StyleSheet } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import { useRouter } from "expo-router";
 
@@ -84,11 +84,13 @@ export default function SignUpScreen() {
         <TextInput
           autoCapitalize="none"
           value={emailAddress}
+          style={styles.input}
           placeholder="Enter email"
           onChangeText={(email) => setEmailAddress(email)}
         />
         <TextInput
           value={password}
+          style={styles.input}
           placeholder="Enter password"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
@@ -98,3 +100,26 @@ export default function SignUpScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 16,
+  },
+  card: {
+    flexDirection: "column",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    padding: 16,
+    borderRadius: 8,
+    rowGap: 8,
+  },
+  input: {
+    height: 40,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 16,
+    marginBottom: 12,
+    paddingLeft: 8,
+  },
+});
