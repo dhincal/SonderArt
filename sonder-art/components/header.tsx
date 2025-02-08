@@ -71,7 +71,7 @@ export default function Header() {
           name="plus"
           size={32}
           color="#000"
-          style={{ alignSelf: "center" }}
+          style={styles.addButton}
         />
       </Link>
     </View>
@@ -97,14 +97,15 @@ const styles = StyleSheet.create({
     width: 60,
   },
   addButton: {
-    borderWidth: 4,
+    borderWidth: 3,
     borderColor: "#000",
     borderRadius: 100,
-    height: 48,
-    width: 48,
+    height: 60,
+    width: 60,
     color: "#FFFFFF",
     justifyContent: "center",
     fontSize: 128,
+    padding: 12,
     marginLeft: 12,
   },
   appTitle: {
