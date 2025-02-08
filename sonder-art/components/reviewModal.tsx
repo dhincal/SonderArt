@@ -9,6 +9,7 @@ import {
   Modal,
   Button,
   TextInput,
+  ScrollView,
 } from "react-native";
 import { initializeApp, getApp, getApps } from "firebase/app";
 import {
@@ -28,7 +29,6 @@ import {
 import { IconSymbol } from "./ui/IconSymbol";
 import * as ImagePicker from "expo-image-picker";
 import { useQuery } from "@tanstack/react-query";
-
 type Props = {
   isVisible: boolean;
   postID: string;
@@ -52,30 +52,35 @@ export default function ReviewModal(props: Props) {
 
   return (
     <Modal animationType="slide" visible={props.isVisible} transparent={true}>
-      <View style={styles.modalContainer}>
-        <Text style={styles.title}>Review Your Applications</Text>
-        {data?.map((event: any) => {
-          if (event.id == props.postID) {
-            return (
-              <View key={event.id} style={{ width: "90%" }}>
-                <Text style={{ fontSize: 32 }}>{data.fullName}</Text>
-                <Image
-                  source={data.imageUrl}
-                  style={{ height: 40, width: 40 }}
-                />
-                <Text style={{ fontSize: 32 }}>{event.eventLocation}</Text>
-                <Text style={{ fontSize: 32 }}>{event.eventDescription}</Text>
-              </View>
-            );
-          }
-        })}
-        <TouchableOpacity
-          style={styles.buttons}
-          onPress={() => props.onClose()}
-        >
-          <Text style={{ fontSize: 32 }}>Close</Text>
-        </TouchableOpacity>
-      </View>
+      <ScrollView>
+        <View style={styles.modalContainer}>
+          <Text style={styles.title}>Review Your Applications</Text>
+          {data?.map((event: any) => {
+            if (event.id == props.postID) {
+              return (
+                <View
+                  key={event.id}
+                  style={{ width: "90%", backgroundColor: "#000000" }}
+                >
+                  <Text style={{ fontSize: 32 }}>{data.fullName}</Text>
+                  <Image
+                    source={data.imageUrl}
+                    style={{ height: 40, width: 40 }}
+                  />
+                  <Text style={{ fontSize: 32 }}>{event.eventLocation}</Text>
+                  <Text style={{ fontSize: 32 }}>{event.eventDescription}</Text>
+                </View>
+              );
+            }
+          })}
+          <TouchableOpacity
+            style={styles.buttons}
+            onPress={() => props.onClose()}
+          >
+            <Text style={{ fontSize: 32 }}>Close</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </Modal>
   );
 }
@@ -84,6 +89,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     height: "80%",
     width: "90%",
+    minHeight: "80%",
     paddingVertical: 30,
     borderRadius: 20,
     backgroundColor: "#fff",

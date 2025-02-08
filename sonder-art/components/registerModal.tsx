@@ -18,12 +18,20 @@ import {
   getDownloadURL,
   listAll,
 } from "firebase/storage";
-import { SignedIn, SignedOut, useUser, useClerk } from "@clerk/clerk-expo";
+import {
+  SignedIn,
+  SignedOut,
+  useUser,
+  useClerk,
+  useAuth,
+} from "@clerk/clerk-expo";
 import { IconSymbol } from "./ui/IconSymbol";
 import * as ImagePicker from "expo-image-picker";
+import { useMutation } from "@tanstack/react-query";
 
 type Props = {
   isVisible: boolean;
+  eventId: string;
   onClose: () => void;
 };
 
@@ -39,6 +47,29 @@ export default function RegisterModal(props: Props) {
   //   projectId: process.env.FIREBASE_PROJECT_ID,
   //   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   // };
+
+  const { getToken } = useAuth();
+
+  const mutation = useMutation({
+    mutationFn: async (imgUrl: string) => {
+      const res = await fetch("https://api.pulth.com/api/applications", {
+        method: "PUT",
+        body: JSON.stringify({
+          email: email,
+          fullName: fullName,
+          desc: desc,
+          imageUrl: imgUrl,
+          eventId: props.eventId,
+        }),
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${await getToken()}`,
+        },
+      });
+      return res.json();
+    },
+  });
 
   const firebaseConfig = {
     apiKey: "AIzaSyDqg4n5w9v1z0q3H2Gz7l0xVj8m6u5JXfI",
@@ -77,7 +108,7 @@ export default function RegisterModal(props: Props) {
         // Handle successful uploads on complete
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
-
+          mutation.mutate(downloadURL);
           // Save the downloadURL to your database or do something with it
         });
       }

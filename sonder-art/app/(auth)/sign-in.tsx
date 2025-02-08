@@ -11,6 +11,7 @@ import {
 import { useEffect, useCallback } from "react";
 import React from "react";
 import * as WebBrowser from "expo-web-browser";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 
 export const useWarmUpBrowser = () => {
   useEffect(() => {
@@ -187,7 +188,8 @@ export default function Page() {
             <Text style={{ color: "#fff", fontSize: 24 }}>Register</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={onGoogleLogin} style={styles.signUpButton}>
-            <Text style={{ color: "#fff", fontSize: 24 }}>ANTEP</Text>
+            <Text style={{ color: "#fff", fontSize: 24 }}>Google</Text>
+            <IconSymbol name="g.circle" size={32} color="#fff"></IconSymbol>
           </TouchableOpacity>
         </View>
       </View>
@@ -238,6 +240,7 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: "center",
     alignItems: "center",
+    flexDirection: "row",
     width: "50%",
   },
 });

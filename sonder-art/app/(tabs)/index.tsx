@@ -107,6 +107,7 @@ export default function HomeScreen() {
 
         <RegisterModal
           isVisible={applyModal}
+          eventId={eventId}
           onClose={() => {
             setApplyModal(false);
           }}
