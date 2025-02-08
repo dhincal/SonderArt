@@ -66,19 +66,14 @@ export default function Header() {
         </Popover>
       </SignedIn>
       <Text style={styles.appTitle}>SONDERART</Text>
-      <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => {
-          console.log("add");
-        }}
-      >
+      <Link href="/(tabs)/createEvent">
         <IconSymbol
           name="plus"
           size={32}
           color="#000"
           style={{ alignSelf: "center" }}
         />
-      </TouchableOpacity>
+      </Link>
     </View>
   );
 }
