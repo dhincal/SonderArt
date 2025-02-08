@@ -55,6 +55,17 @@ export default function HomeScreen() {
               <IconSymbol name="mappin.and.ellipse" size={32} color="#ffffff" />
               <Text style={styles.font}>Chicago</Text>
             </View>
+            <View style={styles.locationsView}>
+              <TouchableOpacity style={styles.extraLocation}>
+                <Text style={styles.extraLocationText}>Michigan</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.extraLocation}>
+                <Text style={styles.extraLocationText}>Detroit</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.extraLocation}>
+                <Text style={styles.extraLocationText}>London</Text>
+              </TouchableOpacity>
+            </View>
             <MainPageEvent
               eventName="Fundraiser for Dino Skeletons in chicago"
               eventDate="27th December 2025"
@@ -123,6 +134,27 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     flexDirection: "row",
     justifyContent: "flex-start",
+  },
+  locationsView: {
+    width: "90%",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  extraLocation: {
+    borderRadius: 100,
+    width: "30%",
+    backgroundColor: "#898989",
+    paddingVertical: 4,
+    paddingHorizontal: 24,
+    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+  },
+  extraLocationText: {
+    marginTop: 4,
+    fontSize: 24,
+    color: "white",
+    fontFamily: "Jomhurai",
+    textAlign: "center",
   },
   font: {
     fontFamily: "Jomhurai",
