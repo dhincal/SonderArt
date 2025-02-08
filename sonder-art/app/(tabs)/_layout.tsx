@@ -37,11 +37,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="rsvp"
         options={{
-          title: "Explore",
+          title: "Events",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="03.circle.fill.ar" color={color} />
+            <IconSymbol size={28} name="ticket" color={color} />
           ),
         }}
       />
