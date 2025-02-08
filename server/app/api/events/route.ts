@@ -6,7 +6,7 @@ export async function GET() {
   console.log(events.length);
   return new Response(JSON.stringify(events), {
     headers: {
-      "Content-Type": "text/plain",
+      "Content-Type": "json/application",
       // UTF
     },
   });
