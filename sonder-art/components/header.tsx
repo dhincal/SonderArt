@@ -7,20 +7,38 @@ import {
   StatusBar,
 } from "react-native";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { SignedIn, SignedOut, useUser, useClerk } from "@clerk/clerk-expo";
+import { Link } from "expo-router";
+
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 
 export default function Header() {
+  const user = useUser();
+
+  const { signOut } = useClerk();
+
   return (
     <View style={styles.headerView}>
-      <TouchableOpacity
-        onPress={() => {
-          console.log("profile");
-        }}
-      >
-        <Image
-          style={styles.headerProfile}
-          source={require("@/assets/images/ppdummy.jpg")}
-        />
-      </TouchableOpacity>
+      <SignedOut>
+        <Link href="/(auth)/sign-in" onPress={() => console.log("logina")}>
+          <View style={styles.loginButton}>
+            <IconSymbol
+              name="door.french.open"
+              size={32}
+              color={"#fff"}
+              style={{ alignSelf: "center" }}
+            ></IconSymbol>
+          </View>
+        </Link>
+      </SignedOut>
+      <SignedIn>
+        <Link onPress={() => signOut()} href="/(auth)/sign-in">
+          <Image
+            style={styles.headerProfile}
+            source={{ uri: user.user?.imageUrl }}
+          />
+        </Link>
+      </SignedIn>
       <Text style={styles.appTitle}>SONDERART</Text>
       <TouchableOpacity
         style={styles.addButton}
@@ -41,7 +59,7 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   headerView: {
-    height: "10%",
+    height: 90,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
@@ -77,8 +95,16 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     padding: 8,
     margin: 0,
-    lineHeight: 44,
+    lineHeight: 48,
     paddingHorizontal: 16,
     borderRadius: 30,
+  },
+  loginButton: {
+    borderColor: "#000",
+    borderRadius: 100,
+    height: 60,
+    width: 60,
+    backgroundColor: "#630000",
+    justifyContent: "center",
   },
 });
