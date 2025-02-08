@@ -10,8 +10,9 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 import { SignedIn, SignedOut, useUser, useClerk } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
 
-import { NavigationProp, useNavigation } from "@react-navigation/native";
 import Popover from "react-native-popover-view";
+
+import { Protect } from "@clerk/clerk-expo";
 
 export default function Header() {
   const user = useUser();
@@ -58,6 +59,9 @@ export default function Header() {
             >
               <Text>Become Publisher!</Text>
             </TouchableOpacity>
+            <Link href="/(auth)/sign-in" onPress={() => signOut()}>
+              <Text>Sign Out!</Text>
+            </Link>
           </View>
         </Popover>
       </SignedIn>

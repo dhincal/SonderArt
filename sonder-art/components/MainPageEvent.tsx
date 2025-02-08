@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   StatusBar,
+  Modal,
 } from "react-native";
 
 import { SignedIn, SignedOut, useUser, useClerk } from "@clerk/clerk-expo";
@@ -20,10 +21,13 @@ type Props = {
   eventAttendees: number;
   eventOrganizer: string;
   eventOrganizerImage: string;
+  openModal: () => void;
 };
 
 export default function MainPageEvent(props: Props) {
   const user = useUser();
+
+  const [openRequest, setOpenRequest] = React.useState(false);
 
   return (
     <View style={styles.eventContainer}>
@@ -98,9 +102,7 @@ export default function MainPageEvent(props: Props) {
           </View>
           <TouchableOpacity
             style={styles.bookmarkButton}
-            onPress={() => {
-              console.log("add");
-            }}
+            onPress={() => props.openModal()}
           >
             <IconSymbol
               name="bookmark.circle"

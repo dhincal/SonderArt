@@ -20,9 +20,12 @@ import { IconSymbol } from "@/components/ui/IconSymbol";
 import MainPageEvent from "@/components/MainPageEvent";
 import { useUser } from "@clerk/clerk-expo";
 import { useQuery } from "@tanstack/react-query";
+import RegisterModal from "@/components/registerModal";
 
 export default function HomeScreen() {
   const [search, setSearch] = React.useState("");
+
+  const [modal, setModal] = React.useState(false);
 
   const { isLoading, data, error } = useQuery({
     queryKey: ["events"],
@@ -31,9 +34,7 @@ export default function HomeScreen() {
       return res.json();
     },
   });
-
   console.log(data);
-
   const user = useUser();
   useFonts({
     Jomhurai: require("../../assets/fonts/Jomhuria-Regular.ttf"),
@@ -75,6 +76,7 @@ export default function HomeScreen() {
               eventAttendees={100}
               eventOrganizer="Event Organizer"
               eventOrganizerImage={user.user?.imageUrl ?? ""}
+              openModal={() => setModal(true)}
             />
             <MainPageEvent
               eventName="Fundraiser for Dino Skeletons in chicago"
@@ -85,6 +87,7 @@ export default function HomeScreen() {
               eventAttendees={100}
               eventOrganizer="Event Organizer"
               eventOrganizerImage={user.user?.imageUrl ?? ""}
+              openModal={() => setModal(true)}
             />
             <MainPageEvent
               eventName="Fundraiser for Dino Skeletons in chicago"
@@ -95,9 +98,16 @@ export default function HomeScreen() {
               eventAttendees={100}
               eventOrganizer="Event Organizer"
               eventOrganizerImage={user.user?.imageUrl ?? ""}
+              openModal={() => setModal(true)}
             />
           </View>
         </ScrollView>
+        <RegisterModal
+          isVisible={modal}
+          onClose={() => {
+            setModal(false);
+          }}
+        />
       </SafeAreaView>
     </SafeAreaProvider>
   );
