@@ -124,24 +124,30 @@ export default function RegisterModal(props: Props) {
           multiline={true}
           style={styles.textArea}
           placeholder="Tell us more about your artwork..."
-          value={email}
-          onChangeText={setEmail}
+          value={desc}
+          onChangeText={setDesc}
           placeholderTextColor={"#640000"}
         />
         <TouchableOpacity style={styles.searchBar} onPress={pickImage}>
-          <IconSymbol
-            style={{ alignSelf: "center" }}
-            name="photo"
-            size={56}
-            color="#460000"
-          />
+          {image ? (
+            <Image
+              source={{ uri: image }}
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 10,
+                alignSelf: "center",
+              }}
+            />
+          ) : (
+            <IconSymbol
+              style={{ alignSelf: "center" }}
+              name="photo"
+              size={56}
+              color="#460000"
+            />
+          )}
         </TouchableOpacity>
-        {image && (
-          <Image
-            source={{ uri: image }}
-            style={{ width: 150, height: 150, borderRadius: 10 }}
-          />
-        )}
         <View
           style={{
             flexDirection: "row",
